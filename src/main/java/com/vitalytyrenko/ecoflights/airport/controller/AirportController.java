@@ -1,6 +1,6 @@
 package com.vitalytyrenko.ecoflights.airport.controller;
 
-import com.vitalytyrenko.ecoflights.airport.dto.Airport;
+import com.vitalytyrenko.ecoflights._models.Airport;
 import com.vitalytyrenko.ecoflights.airport.service.AirportService;
 import org.springframework.web.bind.annotation.*;
 

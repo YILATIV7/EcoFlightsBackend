@@ -1,14 +1,16 @@
 package com.vitalytyrenko.ecoflights.airport.service;
 
-import com.vitalytyrenko.ecoflights.airport.dto.Airport;
+import com.vitalytyrenko.ecoflights._models.Airport;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.*;
 
+@Getter
 @Service
 public class AirportService {
 
@@ -35,11 +37,4 @@ public class AirportService {
         }
     }
 
-    public List<Airport> getAllAirports() {
-        return allAirports;
-    }
-
-    public List<Airport> getBigAirports() {
-        return bigAirports;
-    }
 }

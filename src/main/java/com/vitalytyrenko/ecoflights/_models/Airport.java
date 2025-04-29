@@ -1,4 +1,4 @@
-package com.vitalytyrenko.ecoflights.airport.dto;
+package com.vitalytyrenko.ecoflights._models;
 
 import lombok.Data;
 
