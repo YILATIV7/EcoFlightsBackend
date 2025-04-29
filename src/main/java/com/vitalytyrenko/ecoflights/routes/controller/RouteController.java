@@ -1,13 +1,10 @@
 package com.vitalytyrenko.ecoflights.routes.controller;
 
-import com.vitalytyrenko.ecoflights.routes.dto.RouteRequest;
-import com.vitalytyrenko.ecoflights.routes.dto.RouteResponse;
 import com.vitalytyrenko.ecoflights.routes.service.RouteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,9 +14,9 @@ public class RouteController {
 
     private final RouteService routeService;
 
-    @PostMapping("/search")
-    public ResponseEntity<RouteResponse> searchRoute(@RequestBody RouteRequest request) {
-        RouteResponse response = routeService.processRouteRequest(request);
-        return ResponseEntity.ok(response);
+    @GetMapping("/search")
+    public void searchRoute(@RequestParam("from") String fromPlace,
+                            @RequestParam("to") String toPlace) {
+        routeService.searchRoutes(fromPlace, toPlace);
     }
 }

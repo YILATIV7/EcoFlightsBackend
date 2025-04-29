@@ -1,5 +1,6 @@
 package com.vitalytyrenko.ecoflights.routes.service;
 
+import com.vitalytyrenko.ecoflights.geocoding.service.GeocodingService;
 import com.vitalytyrenko.ecoflights.routes.dto.RouteRequest;
 import com.vitalytyrenko.ecoflights.routes.dto.RouteResponse;
 import com.vitalytyrenko.ecoflights._models.Coordinates;
@@ -12,30 +13,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RouteService {
 
-    public RouteResponse processRouteRequest(RouteRequest request) {
-        // 1. Геокодування
-        Coordinates from = geocode(request.getFromLocation());
-        Coordinates to = geocode(request.getToLocation());
+    private final GeocodingService geocodingService;
 
-        // 2. Найближчі аеропорти (умовно)
-        String nearestFrom = findNearestAirport(from);
-        String nearestTo = findNearestAirport(to);
+    public void searchRoutes(String fromPlace, String toPlace) {
+        // 1. Геокодування початкової та кінцевої точки
+        Coordinates fromCoords = geocodingService.getCoordinates(fromPlace);
+        Coordinates toCoords = geocodingService.getCoordinates(toPlace);
 
-        // 3. Побудова списку маршрутів (максимально спрощено)
-        List<String> routes = List.of(
-                nearestFrom + " -> " + nearestTo + " (direct flight)"
-        );
+        System.out.println("From: " + fromCoords + " To: " + toCoords);
 
-        return new RouteResponse(nearestFrom, nearestTo, routes);
-    }
-
-    private Coordinates geocode(String location) {
-        // Псевдо-геокодування, заглушка
-        return new Coordinates(50.45, 30.52); // Київ
-    }
-
-    private String findNearestAirport(Coordinates coords) {
-        // Псевдологіка пошуку найближчого аеропорту
-        return "KBP"; // Бориспіль
+//        // 2. Пошук найближчих великих аеропортів
+//        Airport nearestFromAirport = airportSearchService.findNearestAirport(fromCoords);
+//        Airport nearestToAirport = airportSearchService.findNearestAirport(toCoords);
+//
+//        // 3. Пошук доступних авіарейсів між аеропортами
+//        List<FlightOption> flightOptions = flightSearchService.findFlights(nearestFromAirport, nearestToAirport);
+//
+//        // 4. Побудова мультимодальних маршрутів
+//        List<RouteOption> multimodalRoutes = multimodalBuilder.buildRoutes(
+//                flightOptions, fromCoords, toCoords
+//        );
+//
+//        // 5. Оцінка та сортування маршрутів за критеріями: вартість, час, екологічність
+//        List<RouteOption> rankedRoutes = routeEvaluator.rankRoutes(multimodalRoutes);
+//
+//        // 6. Повертаємо відсортований список найкращих маршрутів
+//        return rankedRoutes;
     }
 }
