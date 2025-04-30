@@ -16,4 +16,8 @@ public class Airport {
     private String timezone;
     private String type;
     private String region;
+
+    public Coordinates getCoordinates() {
+        return new Coordinates(latitude, longitude);
+    }
 }
