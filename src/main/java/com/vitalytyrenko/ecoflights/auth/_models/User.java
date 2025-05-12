@@ -17,4 +17,7 @@ public class User {
     private String password;
 
     private String fullName;
+
+    @Enumerated(EnumType.STRING)
+    private Preference preference;
 }
