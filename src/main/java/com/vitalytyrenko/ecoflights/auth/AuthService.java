@@ -36,6 +36,6 @@ public class AuthService {
             throw new IllegalArgumentException("Неправильний пароль");
         }
 
-        return jwtService.generateToken(user);
+        return jwtService.generateToken(user.getEmail());
     }
 }

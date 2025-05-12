@@ -1,8 +1,8 @@
 package com.vitalytyrenko.ecoflights.auth;
 
-import com.vitalytyrenko.ecoflights.auth._models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -10,15 +10,17 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final String SECRET_KEY = "super-secret-key";
+    private static final String SECRET_KEY = "supersecretkeysupersecretkey1234";
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 годин
 
-    public String generateToken(User user) {
+    public String generateToken(String email) {
+        var key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+
         return Jwts.builder()
-                .setSubject(user.getEmail())
-                .claim("fullName", user.getFullName())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 години
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
 }
